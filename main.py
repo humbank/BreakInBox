@@ -1,0 +1,100 @@
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QFile, QTimer
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtGui import QIcon
+import sys
+from rooms import Room
+
+
+
+class Game():
+    def __init__(self, app):
+
+        self.app = app
+        
+        self.loader = QUiLoader()
+        self.ui_file = QFile("UI/ui/new_start.ui")
+        if not self.ui_file.open(QFile.ReadOnly):
+            print("Cannot open UI")
+            sys.exit(1)
+        
+        self.test_room = Room("Test Room", 2, ["This is a test romm", "This is thbe end of the test rookm"], {"hint1":"test", "hint2":"test2"})
+
+        self.rooms = {"Test Room":self.test_room}
+
+
+
+        self.current_room_nbr = 1
+        self.time_remaining = 61
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_countdown)
+        
+        self.window = self.loader.load(self.ui_file)
+        self.ui_file.close()
+
+        self.window.setWindowIcon(QIcon("UI/assets/icons/app_icon.jpeg"))
+
+        self.window.stackedWidget.setCurrentWidget(self.window.page_start)
+
+        self.window.show()
+
+        self.setup()
+
+
+    def setup(self):
+        self.populate_rooms(self.rooms)
+        self.start_screen()
+        self.menu_screen()
+        self.admin_screen()
+
+
+
+
+    def start_screen(self):
+        self.window.pb_start_no.clicked.connect(lambda: QApplication.quit())
+        self.window.pb_start_yes.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
+
+    def menu_screen(self):
+        self.window.pb_admin_menu.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_admin))
+        self.window.pb_back_menu.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_start))
+        self.window.lst_menu.itemClicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_puzzle))
+        self.window.lst_menu.itemClicked.connect(lambda item: self.puzzle_screen(item), self.timer.start(1000))
+
+    def admin_screen(self):
+        self.window.pb_back_admin.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
+
+    def puzzle_screen(self, item):
+        self.window.pb_puzzle_back.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
+        self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.rooms[item.text()].room_total}')
+        self.window.lbl_puzzle_descr.setText(self.rooms[item.text()].descriptions[self.current_room_nbr-1])
+        
+
+    def update_countdown(self):
+        self.window.lbl_countdown_puzzle.setText(self.format_time(self.time_remaining))
+        self.time_remaining -= 1
+
+        if self.time_remaining < 0:
+            self.timer.stop()
+
+
+
+    def format_time(self, seconds):
+        minutes = seconds // 60
+        secs = seconds % 60
+        return f"{minutes:02}:{secs:02}"
+
+
+
+    def populate_rooms(self, rooms):
+        for Room in rooms.values():
+            self.window.lst_menu.addItem(Room.name)
+
+
+
+
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    game = Game(app)
+    sys.exit(app.exec())
