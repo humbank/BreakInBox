@@ -1,7 +1,7 @@
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QLabel
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QFont, QFontDatabase
 import sys
 from rooms import Room
 
@@ -17,6 +17,9 @@ class Game():
         if not self.ui_file.open(QFile.ReadOnly):
             print("Cannot open UI")
             sys.exit(1)
+        
+        
+        self.fonts = ["October Crow", "digital-7"]
         
         self.test_room = Room("Test Room", 2, ["This is a test romm", "This is thbe end of the test rookm"], {"hint1":"test", "hint2":"test2"})
 
@@ -42,6 +45,8 @@ class Game():
 
 
     def setup(self):
+        self.load_fonts(self.fonts)
+
         self.populate_rooms(self.rooms)
         self.start_screen()
         self.menu_screen()
@@ -89,6 +94,17 @@ class Game():
         for Room in rooms.values():
             self.window.lst_menu.addItem(Room.name)
 
+    def load_fonts(self, fonts):
+        self.added_fonts = []
+
+        for font in fonts:
+            font_id = QFontDatabase.addApplicationFont(f"./assets/fonts/{font}.ttf")
+
+            if font_id == -1:
+                print("Failed to load font!")
+            else:
+                family = QFontDatabase.applicationFontFamilies(font_id)[0]
+                self.added_fonts.append(QFont(family))
 
 
 
