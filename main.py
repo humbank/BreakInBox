@@ -13,7 +13,7 @@ class Game():
         self.app = app
         
         self.loader = QUiLoader()
-        self.ui_file = QFile("UI/ui/new_start.ui")
+        self.ui_file = QFile("./ui/new_start.ui")
         if not self.ui_file.open(QFile.ReadOnly):
             print("Cannot open UI")
             sys.exit(1)
