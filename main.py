@@ -94,8 +94,9 @@ class Game():
         for Room in rooms.values():
             self.window.lst_menu.addItem(Room.name)
 
+
     def load_fonts(self, fonts):
-        self.added_fonts = []
+        #self.added_fonts = []
 
         for font in fonts:
             font_id = QFontDatabase.addApplicationFont(f"./assets/fonts/{font}.ttf")
@@ -104,7 +105,7 @@ class Game():
                 print("Failed to load font!")
             else:
                 family = QFontDatabase.applicationFontFamilies(font_id)[0]
-                self.added_fonts.append(QFont(family))
+                #self.added_fonts.append(QFont(family))
 
 
 
