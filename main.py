@@ -14,6 +14,7 @@ class Game():
         
         self.loader = QUiLoader()
         self.ui_file = QFile("./ui/new_start.ui")
+
         if not self.ui_file.open(QFile.ReadOnly):
             print("Cannot open UI")
             sys.exit(1)
@@ -22,14 +23,15 @@ class Game():
         self.fonts = ["October Crow", "digital-7"]
         
         self.test_room = Room("Test Room", 2, ["This is a test romm", "This is thbe end of the test rookm"], {"hint1":"test", "hint2":"test2"})
-        self.laser_room = Room("Laser Room", 1, ["Can you connect the laser and the diode?"], {"hint1":"x degree"})
+        self.laser_room = Room("Laser Room", 1, ["Can you connect the laser and the diode?"], {"hint1":"x degree"}, required_deletes=["pb_submit", "stacked_puzzle_content"])
 
         self.rooms = {"Test Room":self.test_room, "Laser Room":self.laser_room}
 
 
 
         self.current_room_nbr = 1
-        self.time_remaining = 61
+        self.current_room = None
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_countdown)
         
@@ -64,15 +66,21 @@ class Game():
         self.window.pb_admin_menu.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_admin))
         self.window.pb_back_menu.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_start))
         self.window.lst_menu.itemClicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_puzzle))
-        self.window.lst_menu.itemClicked.connect(lambda item: self.puzzle_screen(item), self.timer.start(1000))
+        self.window.lst_menu.itemClicked.connect(lambda item: setattr(self, "current_room", self.rooms[item.text()]))
+        self.window.lst_menu.itemClicked.connect(lambda: self.puzzle_screen(), setattr(self, "time_remaining", self.current_room.name), self.timer.start(1000))
 
     def admin_screen(self):
         self.window.pb_back_admin.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
 
-    def puzzle_screen(self, item):
+    def puzzle_screen(self):
         self.window.pb_puzzle_back.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
-        self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.rooms[item.text()].room_total}')
-        self.window.lbl_puzzle_descr.setText(self.rooms[item.text()].descriptions[self.current_room_nbr-1])
+        self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.current_room.room_total}')
+        self.window.lbl_puzzle_descr.setText(self.current_room.descriptions[self.current_room_nbr-1])
+
+        for name in self.current_room.required_deletes:
+            widget = getattr(self.window, name, None)
+            if widget is not None:
+                widget.deleteLater()
         
 
     def update_countdown(self):
