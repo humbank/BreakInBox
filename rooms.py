@@ -6,10 +6,10 @@ rooms = {
 }
 
 class Room():
-    def __init__(self, name, room_total, descriptions, hints, required_deletes=[]):
+    def __init__(self, name, room_total, descriptions, hints, total_time=60, required_deletes=[]):
         self.name = name
         self.room_total = room_total
         self.descriptions = descriptions
         self.hints = hints
-        #self.total_time
+        self.total_time = total_time
         self.required_deletes = required_deletes
