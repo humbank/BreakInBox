@@ -67,7 +67,7 @@ class Game():
         self.window.pb_back_menu.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_start))
         self.window.lst_menu.itemClicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_puzzle))
         self.window.lst_menu.itemClicked.connect(lambda item: setattr(self, "current_room", self.rooms[item.text()]))
-        self.window.lst_menu.itemClicked.connect(lambda: self.puzzle_screen(), setattr(self, "time_remaining", self.current_room.name), self.timer.start(1000))
+        self.window.lst_menu.itemClicked.connect(lambda: self.puzzle_screen(), setattr(self, "time_remaining", self.current_room.total_time), self.timer.start(1000))
 
     def admin_screen(self):
         self.window.pb_back_admin.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
