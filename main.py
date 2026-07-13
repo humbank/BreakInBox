@@ -2,8 +2,10 @@ from PySide6.QtWidgets import QApplication, QLabel
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import QIcon, QFont, QFontDatabase
+import threading
 import sys
 from rooms import Room
+from comm import *
 
 
 
@@ -56,6 +58,8 @@ class Game():
         self.start_screen()
         self.menu_screen()
         self.admin_screen()
+
+        threading.Thread(target=read, daemon=True).start()
 
 
 
