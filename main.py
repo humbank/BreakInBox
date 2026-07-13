@@ -84,10 +84,10 @@ class Game():
         self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.current_room.room_total}')
         self.window.lbl_puzzle_descr.setText(self.current_room.descriptions[self.current_room_nbr-1])
 
-        self.window.pb_led1_on.clicked.connect(ESP().one.led_on)
-        self.window.pb_led1_off.clicked.connect(ESP().one.led_off)
-        self.window.pb_led2_on.clicked.connect(ESP().two.led_on)
-        self.window.pb_led2_off.clicked.connect(ESP().two.led_off)
+        self.window.pb_led1_on.clicked.connect(lambda: ESP().one.led_on())
+        self.window.pb_led1_off.clicked.connect(lambda: ESP().one.led_off())
+        self.window.pb_led2_on.clicked.connect(lambda: ESP().two.led_on())
+        self.window.pb_led2_off.clicked.connect(lambda: ESP().two.led_off())
 
         for name in self.current_room.required_deletes:
             widget = getattr(self.window, name, None)
