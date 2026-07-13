@@ -1436,7 +1436,7 @@ background-color: black;</string>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_code_puzzle">
        <widget class="QLabel" name="lbl_hint">
@@ -1557,7 +1557,60 @@ background-color: black;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="page_screen_puzzle"/>
+      <widget class="QWidget" name="page_screen_puzzle">
+       <widget class="QPushButton" name="pb_led1_off">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>260</y>
+          <width>88</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>led1 off</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pb_led1_on">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>220</y>
+          <width>88</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Led1 on</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pb_led2_off">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>250</y>
+          <width>88</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>led2 off</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pb_led2_on">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>210</y>
+          <width>88</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>led2 on</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
      <widget class="QLabel" name="lbl_countdown_puzzle">
       <property name="geometry">

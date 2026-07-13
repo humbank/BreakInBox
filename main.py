@@ -6,6 +6,7 @@ import threading
 import sys
 from rooms import Room
 from comm import *
+from esps import *
 
 
 
@@ -26,8 +27,9 @@ class Game():
         
         self.test_room = Room("Test Room", 2, ["This is a test romm", "This is thbe end of the test rookm"], {"hint1":"test", "hint2":"test2"})
         self.laser_room = Room("Laser Room", 1, ["Can you connect the laser and the diode?"], {"hint1":"x degree"}, total_time=180, required_deletes=["pb_submit", "stacked_puzzle_content"])
+        self.comm_test_room = Room("Led test", 1, ["Led test"], ["no"], 1000)
 
-        self.rooms = {"Test Room":self.test_room, "Laser Room":self.laser_room}
+        self.rooms = {"Test Room":self.test_room, "Laser Room":self.laser_room, "Led test": self.comm_test_room}
 
 
 
@@ -81,6 +83,11 @@ class Game():
         self.window.pb_puzzle_back.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
         self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.current_room.room_total}')
         self.window.lbl_puzzle_descr.setText(self.current_room.descriptions[self.current_room_nbr-1])
+
+        self.window.pb_led1_on.clicked.connect(ESP().one.led_on)
+        self.window.pb_led1_off.clicked.connect(ESP().one.led_off)
+        self.window.pb_led2_on.clicked.connect(ESP().two.led_on)
+        self.window.pb_led2_off.clicked.connect(ESP().two.led_off)
 
         for name in self.current_room.required_deletes:
             widget = getattr(self.window, name, None)
