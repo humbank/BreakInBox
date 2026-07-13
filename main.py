@@ -55,7 +55,7 @@ class Game():
 
     def setup(self):
         self.load_fonts(self.fonts)
-        self.ESPs = {"Esp1": ESP(), "Esp2":ESP()}
+        self.ESP = ESP()
 
         self.populate_rooms(self.rooms)
         self.start_screen()
@@ -85,10 +85,10 @@ class Game():
         self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.current_room.room_total}')
         self.window.lbl_puzzle_descr.setText(self.current_room.descriptions[self.current_room_nbr-1])
 
-        self.window.pb_led1_on.clicked.connect(lambda: self.ESPs[1].one.led_on())
-        self.window.pb_led1_off.clicked.connect(lambda: self.ESPs[1].one.led_off())
-        self.window.pb_led2_on.clicked.connect(lambda: self.ESPs[2].two.led_on())
-        self.window.pb_led2_off.clicked.connect(lambda: self.ESPs[2].two.led_off())
+        self.window.pb_led1_on.clicked.connect(lambda: self.ESP.one.led_on())
+        self.window.pb_led1_off.clicked.connect(lambda: self.ESP.one.led_off())
+        self.window.pb_led2_on.clicked.connect(lambda: self.ESP.two.led_on())
+        self.window.pb_led2_off.clicked.connect(lambda: self.ESP.two.led_off())
 
         for name in self.current_room.required_deletes:
             widget = getattr(self.window, name, None)
