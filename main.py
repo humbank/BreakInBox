@@ -27,9 +27,9 @@ class Game():
         self.fonts = ["October Crow", "digital-7"]
         
         self.laser_room = Room("Laser Room", 1, total_time=180, puzzles=[laser_puzzle("Laser Room", "Can you connect the diode?", "x degree")])
-        self.comm_test_room = Room("Led test", 1, puzzles=[laser_puzzle("Laser Room", "Can you connect the diode?", "x degree")])
+        self.comm_test_room = Room("Led test", 1, puzzles=[test_puzzle("Laser Room", "Can you connect the diode?", "x degree", ESP("LED control"))])
 
-        self.rooms = {"Test Room":self.test_room, "Laser Room":self.laser_room, "Led test": self.comm_test_room}
+        self.rooms = {"Laser Room":self.laser_room, "Led test": self.comm_test_room}
 
 
 
