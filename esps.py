@@ -5,7 +5,7 @@ class ESP():
     def __init__(self, name, id):
         self.name = name
         ##self. assets = assets
-        self.id
+        self.id = id
         self.one = one(1)
         self.two = two(2)
 
