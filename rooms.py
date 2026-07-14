@@ -11,4 +11,12 @@ class Room:
         self.room_total = room_total
         self.total_time = total_time
         self.puzzles = puzzles
+    
+    def setup(self, window, current_room_nbr):
+        window.pb_puzzle_back.clicked.connect(lambda: window.stackedWidget.setCurrentWidget(window.page_menu))
+        window.lbl_puzzle_nbr.setText(f'{current_room_nbr}/{self.room_total}')
+        window.lbl_puzzle_descr.setText(self.puzzles[current_room_nbr-1].descriptions[current_room_nbr-1])
+
+        for puzzle in self.puzzles:
+            puzzle.setup(window)
 

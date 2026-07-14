@@ -26,8 +26,8 @@ class Game():
         
         self.fonts = ["October Crow", "digital-7"]
         
-        self.laser_room = Room("Laser Room", 1, total_time=180, puzzles=[laser_puzzle("Laser Room", "Can you connect the diode?", "x degree")])
-        self.comm_test_room = Room("Led test", 1, puzzles=[test_puzzle("Laser Room", "Can you connect the diode?", "x degree", ESP("LED control"))])
+        self.laser_room = Room("Laser Room", 1, total_time=180, puzzles=[laser_puzzle("Laser Room", ["Can you connect the diode?"], ["x degree"])])
+        self.comm_test_room = Room("Led test", 1, total_time=180, puzzles=[test_puzzle("Laser Room", ["Can you connect the diode?"], ["x degree"], [ESP("LED control", 1)])])
 
         self.rooms = {"Laser Room":self.laser_room, "Led test": self.comm_test_room}
 
@@ -55,7 +55,6 @@ class Game():
 
     def setup(self):
         self.load_fonts(self.fonts)
-        self.ESP = ESP()
 
         self.populate_rooms(self.rooms)
         self.start_screen()
@@ -81,19 +80,9 @@ class Game():
         self.window.pb_back_admin.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
 
     def puzzle_screen(self):
-        self.window.pb_puzzle_back.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
-        self.window.lbl_puzzle_nbr.setText(f'{self.current_room_nbr}/{self.current_room.room_total}')
-        self.window.lbl_puzzle_descr.setText(self.current_room.descriptions[self.current_room_nbr-1])
+        self.current_room.setup(self.window, self.current_room_nbr)
 
-        self.window.pb_led1_on.clicked.connect(lambda: self.ESP.one.led_on())
-        self.window.pb_led1_off.clicked.connect(lambda: self.ESP.one.led_off())
-        self.window.pb_led2_on.clicked.connect(lambda: self.ESP.two.led_on())
-        self.window.pb_led2_off.clicked.connect(lambda: self.ESP.two.led_off())
 
-        for name in self.current_room.required_deletes:
-            widget = getattr(self.window, name, None)
-            if widget is not None:
-                widget.deleteLater()
         
 
     def update_countdown(self):

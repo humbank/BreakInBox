@@ -2,9 +2,10 @@ from comm import send
 
 
 class ESP():
-    def __init__(self, name, assets):
+    def __init__(self, name, id):
         self.name = name
-        self. assets = assets
+        ##self. assets = assets
+        self.id
         self.one = one(1)
         self.two = two(2)
 
