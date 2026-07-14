@@ -26,9 +26,8 @@ class Game():
         
         self.fonts = ["October Crow", "digital-7"]
         
-        self.test_room = Room("Test Room", 2, ["This is a test romm", "This is thbe end of the test rookm"], {"hint1":"test", "hint2":"test2"})
-        self.laser_room = Room("Laser Room", 1, ["Can you connect the laser and the diode?"], {"hint1":"x degree"}, total_time=180, required_deletes=["pb_submit", "stacked_puzzle_content"])
-        self.comm_test_room = Room("Led test", 1, ["Led test"], ["no"], 1000)
+        self.laser_room = Room("Laser Room", 1, total_time=180, puzzles=[laser_puzzle("Laser Room", "Can you connect the diode?", "x degree")])
+        self.comm_test_room = Room("Led test", 1, puzzles=[laser_puzzle("Laser Room", "Can you connect the diode?", "x degree")])
 
         self.rooms = {"Test Room":self.test_room, "Laser Room":self.laser_room, "Led test": self.comm_test_room}
 

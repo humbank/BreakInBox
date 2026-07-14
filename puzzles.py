@@ -13,8 +13,13 @@ class laser_puzzle(Puzzle):
         pass
 
 class code_puzzle(Puzzle):
-    def __init__(self, title, description, hints):
+    def __init__(self, title, description, hints, solution):
         super().__init__(title, description, hints)
+        self.solution = solution
 
     def setup(self):
         pass
+
+class test_puzzle(Puzzle):
+    def __init__(self, title, description, hints, ):
+        super().__init__(title, description, hints)
