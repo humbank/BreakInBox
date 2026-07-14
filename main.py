@@ -5,6 +5,7 @@ from PySide6.QtGui import QIcon, QFont, QFontDatabase
 import threading
 import sys
 from rooms import Room
+from puzzles import *
 from comm import *
 from esps import *
 
