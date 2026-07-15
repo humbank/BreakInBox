@@ -27,13 +27,12 @@ class Game():
         self.fonts = ["October Crow", "digital-7"]
         
         self.laser_room = Room("Laser Room", 1, total_time=180, puzzles=[laser_puzzle("Laser Room", ["Can you connect the diode?"], ["x degree"])])
-        self.comm_test_room = Room("Led test", 1, total_time=180, puzzles=[test_puzzle("Laser Room", ["Can you connect the diode?"], ["x degree"], [ESP("LED control", 1)])])
+        self.comm_test_room = Room("Led test", 2, total_time=180, puzzles=[test_puzzle("Laser Room", ["Can you connect the diode?"], ["x degree"], [ESP("LED control", 1)]),
+                                                                           code_puzzle("Code room", ["Can you guess this 4 digit code? The sum of its digits is 10 and the number is at the prime of its age"], ["Between 1000 and 1100"], ["1009"])])
 
         self.rooms = {"Laser Room":self.laser_room, "Led test": self.comm_test_room}
 
 
-
-        self.current_room_nbr = 1
         self.current_room = None
 
         self.time_remaining = 0
@@ -80,7 +79,7 @@ class Game():
         self.window.pb_back_admin.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.page_menu))
 
     def puzzle_screen(self):
-        self.current_room.setup(self.window, self.current_room_nbr)
+        self.current_room.setup(self.window)
 
 
         
