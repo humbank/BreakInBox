@@ -11,7 +11,7 @@ class laser_puzzle(Puzzle):
     def __init__(self, title, descriptions, hints):
         super().__init__(title, descriptions, hints)
 
-    def setup(self, window):
+    def setup(self):
         pass
 
 class code_puzzle(Puzzle):
@@ -19,7 +19,7 @@ class code_puzzle(Puzzle):
         super().__init__(title, descriptions, hints)
         self.solution = solution
 
-    def setup(self, window):
+    def setup(self):
         pass
 
 class test_puzzle(Puzzle):
